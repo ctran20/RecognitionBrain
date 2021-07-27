@@ -5,7 +5,8 @@ class Signin extends React.Component {
         super(props);
         this.state = {
             signInEmail: '',
-            signInPassword: ''
+            signInPassword: '',
+            errorMsg: ''
         }
     }
 
@@ -32,6 +33,11 @@ class Signin extends React.Component {
                 if (user.id) {
                     this.props.loadUser(user);
                     this.props.onRouteChange('home');
+                }
+                else {
+                    this.setState({
+                        errorMsg: 'Wrong Email or Password!'
+                    })
                 }
             })
     }
@@ -74,6 +80,7 @@ class Signin extends React.Component {
                             <p onClick={() => onRouteChange('register')} className="f6 link dim black db dib pointer">Register</p>
                         </div>
                     </div>
+                    <legend className="f4 fw6 ph0 mh0 ma2">{this.state.errorMsg}</legend>
                 </main>
             </article>
         );

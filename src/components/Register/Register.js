@@ -6,7 +6,8 @@ class Register extends React.Component {
         this.state = {
             name: '',
             email: '',
-            password: ''
+            password: '',
+            errorMsg: ''
         }
     }
 
@@ -23,26 +24,36 @@ class Register extends React.Component {
     }
 
     onSubmitRegister = () => {
-        fetch('http://localhost:3000/register',
-            {
-                method: 'post',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    name: this.state.name,
-                    email: this.state.email,
-                    password: this.state.password
-                })
-            })
-            .then(response => response.json())
-            .then(user => {
-                if (user) {
-                    this.props.loadUser(user);
-                    this.props.onRouteChange('signin');
-                }
-                else {
-                    console.log('Register Error!');
-                }
-            })
+        if (this.state.name && this.state.email && this.state.password) {
+            if (this.state.email.includes('@')) {
+                fetch('http://localhost:3000/register',
+                    {
+                        method: 'post',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            name: this.state.name,
+                            email: this.state.email,
+                            password: this.state.password
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(user => {
+                        if (user) {
+                            this.props.loadUser(user);
+                            this.props.onRouteChange('signin');
+                        }
+                        else {
+                            console.log('Register Error!');
+                        }
+                    })
+            }
+            else {
+                this.setState({ errorMsg: 'Invalid Email!' })
+            }
+        }
+        else {
+            this.setState({ errorMsg: 'Please Fill Out All Fields!' })
+        }
     }
 
     render() {
@@ -88,6 +99,7 @@ class Register extends React.Component {
                                 value="Register" />
                         </div>
                     </div>
+                    <legend className="center f4 fw6 ph0 mh0 ma3">{this.state.errorMsg}</legend>
                 </main>
             </article>
         );
