@@ -26,7 +26,7 @@ class Register extends React.Component {
     onSubmitRegister = () => {
         if (this.state.name && this.state.email && this.state.password) {
             if (this.state.email.includes('@')) {
-                fetch('http://localhost:3000/register',
+                fetch('https://still-thicket-49468.herokuapp.com/register',
                     {
                         method: 'post',
                         headers: { 'Content-Type': 'application/json' },
@@ -38,7 +38,7 @@ class Register extends React.Component {
                     })
                     .then(response => response.json())
                     .then(user => {
-                        if (user) {
+                        if (user.id) {
                             this.props.loadUser(user);
                             this.props.onRouteChange('signin');
                         }

@@ -19,7 +19,7 @@ class Signin extends React.Component {
     }
 
     onSubmitSignIn = () => {
-        fetch('http://localhost:3000/signin',
+        fetch('https://still-thicket-49468.herokuapp.com/signin',
             {
                 method: 'post',
                 headers: { 'Content-Type': 'application/json' },
@@ -39,7 +39,7 @@ class Signin extends React.Component {
                         errorMsg: 'Wrong Email or Password!'
                     })
                 }
-            })
+            }).catch(console.log)
     }
 
     render() {

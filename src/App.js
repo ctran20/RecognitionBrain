@@ -8,11 +8,8 @@ import Signin from './components/Signin/Signin';
 import Register from './components/Register/Register';
 import Particles from 'react-particles-js';
 import { Component } from 'react';
-import Clarifai from 'clarifai';
 
-const app = new Clarifai.App({
-  apiKey: 'fabe82e4ac5b42079723361ad94c85bf'
-});
+
 
 const particlesSetting = {
   particles: {
@@ -60,9 +57,10 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch('http://localhost:3000')
+    fetch('https://still-thicket-49468.herokuapp.com/')
       .then(response => response.json())
-      .then(console.log);
+      .then(console.log)
+      .catch(console.log)
   }
 
   calculateFaceLocation = (data) => {
@@ -89,11 +87,18 @@ class App extends Component {
 
   onPictureSubmit = () => {
     this.setState({ imageUrl: this.state.input })
-    app.models
-      .predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
+    fetch('https://still-thicket-49468.herokuapp.com/imageUrl',
+      {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          input: this.state.input
+        })
+      })
+      .then(response => response.json())
       .then(response => {
         if (response) {
-          fetch('http://localhost:3000/image',
+          fetch('https://still-thicket-49468.herokuapp.com/image',
             {
               method: 'put',
               headers: { 'Content-Type': 'application/json' },
