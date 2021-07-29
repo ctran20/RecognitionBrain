@@ -3,6 +3,8 @@ import bcrypt from 'bcrypt';
 import cors from 'cors';
 import knex from 'knex';
 
+//Not 100% exact for security reason
+
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
