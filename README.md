@@ -13,6 +13,7 @@
 
 <img src="git-imgs/demo.gif" width="700" />
 
+<hr>
 <h1>Register Screen </h1>
 
 - The password are hashed and store securely
